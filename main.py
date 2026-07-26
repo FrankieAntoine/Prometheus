@@ -1,6 +1,6 @@
 import tkinter as tk
 
-backgroundFolder = "C:\\Users\\Cathy\\OneDrive\\Documents\\Github Repositories\\Prometheus\\resources\\images\\backgrounds"
+backgroundFolder = "data\\resources\\backgrounds"
 
 # The game object
 root = tk.Tk(className="Prometheus")
