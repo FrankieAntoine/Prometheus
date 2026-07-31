@@ -18,13 +18,32 @@ root.resizable(0, 0)
 root.title("Prometheus")
 
 # ----- Background images -----
+
+# Zone 1 start background
 bg_menu = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image0.png")
+
+# Zone 1 area backgrounds
+bg_z1a1 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image1.png")
+bg_z1a2 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image2.png")
+bg_z1a3 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image3.png")
+bg_z1a4 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image4.png")
+bg_z1a5 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image5.png")
+bg_z1a6 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image6.png")
+bg_z1a7 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image7.png")
+bg_z1a8 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image8.png")
+bg_z1a9 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image9.png")
+bg_z1a10 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image10.png")
+z1Backgrounds = [bg_z1a1, bg_z1a2, bg_z1a3, bg_z1a4, bg_z1a5, bg_z1a6, bg_z1a7, bg_z1a8, bg_z1a9, bg_z1a10]
+
+# Zone 1 boss background
+bg_z1b1 = tk.PhotoImage(file=backgroundFolder + "\\zone1\\image11.png")
 
 # page setup
 page_start = tk.Frame(root)
 page_saves = tk.Frame(root)
+page_main = tk.Frame(root)
 
-pages = [page_start, page_saves]
+pages = [page_start, page_saves, page_main]
 for frame in pages:
     frame.grid(row=0, column=0, sticky="nsew")
 
@@ -58,6 +77,11 @@ btn_start.place(x=480, y=520, width=125, height=100, anchor="s")
 
 # ---------- SAVES MENU ----------
 
+# Background creation
+background_saves = tk.Canvas(page_saves, highlightthickness=0)
+background_saves.pack(fill="both", expand=True)
+background_saves.create_image(0, 0, image=bg_menu, anchor="nw")
+
 # ----- Variables -----
 playerKeys = ["name", "time"] # list to store the player keys for the dictionary
 save1Data = [] # List to store the data from file 1
@@ -69,11 +93,6 @@ player = {} # Dictionary to store the main player stats. Originally obtained by 
 text_save1_title: tk.Label = None; text_save1_keys: tk.Message = None; text_save1_data: tk.Message = None; btn_save1: tk.Button = None
 text_save2_title: tk.Label = None; text_save2_keys: tk.Message = None; text_save2_data: tk.Message = None; btn_save2: tk.Button = None
 text_save3_title: tk.Label = None; text_save3_keys: tk.Message = None; text_save3_data: tk.Message = None; btn_save3: tk.Button = None
-
-# Background creation
-background_saves = tk.Canvas(page_saves, highlightthickness=0)
-background_saves.pack(fill="both", expand=True)
-background_saves.create_image(0, 0, image=bg_menu, anchor="nw")
 
 # ----- Functions -----
 
@@ -155,12 +174,14 @@ def command_loadSave1():
     player = loadPlayer(save1Data)
     print("Save 1 Loaded!")
     print(player)
+    changePage(page_main)
 
 # Save 2 command
 def command_loadSave2():
     player = loadPlayer(save2Data)
     print("Save 2 Loaded!")
     print(player)
+    changePage(page_main)
 
 
 # Save 3 command
@@ -168,6 +189,19 @@ def command_loadSave3():
     player = loadPlayer(save3Data)
     print("Save 3 Loaded!")
     print(player)
+    changePage(page_main)
+
+# ---------- Main Page ----------
+background_main = tk.Canvas(page_main, highlightthickness=0)
+background_main.pack(fill="both", expand=True)
+background_main.create_image(0, 0, image=bg_z1a1, anchor="nw")
+
+# ----- Variables -----
+
+# ----- Functions -----
+
+# ----- buttons -----
+
 
 # ----- Main Loop -----
 changePage(page_start)
