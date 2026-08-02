@@ -83,7 +83,7 @@ background_saves.pack(fill="both", expand=True)
 background_saves.create_image(0, 0, image=bg_menu, anchor="nw")
 
 # ----- Variables -----
-playerKeys = ["name", "time"] # list to store the player keys for the dictionary
+playerKeys = ["name", "time", "zone", "area"] # list to store the player keys for the dictionary
 save1Data = [] # List to store the data from file 1
 save2Data = [] # List to store the data from file 2
 save3Data = [] # List to store the data from file 3
@@ -106,6 +106,13 @@ def readFile(fileName, list):
         list.append(data)
     file.close()
 
+# A function that turns all the string data into floats and ints if needed
+def configData(list):
+    list[0] = str(list[0])
+    for i in range(1, len(list)):
+        list[i] = int(list[i])
+    return list
+
 # A function to turn the save data lists into a string for the save files to show
 def getListStr(list):
     dataStr = ""
@@ -122,10 +129,16 @@ def loadSaves():
     readFile(save3File, save3Data)
     text_save3_data.config(text=getListStr(save3Data))
 
+def getDict(keys, data):
+    return dict(zip(keys, data))
+
 # Function that loads the save data into the player data
 def loadPlayer(saveData):
-    return dict(zip(playerKeys, saveData))
-
+    global player
+    saveData = configData(saveData)
+    player = getDict(playerKeys, saveData)
+    player["currentArea"] = player["area"]
+    
 # Function that creates all of the visual saves using a for loop
 def createSaves():
 
@@ -151,7 +164,7 @@ def createSaves():
         save_lbl.place(x=240 + (i*x), y=120, width=180, height=50, anchor="n")
 
         # Keys
-        save_keys = tk.Message(page_saves, text="Name:\nTime:", font=("Consolas", 13, "bold"), bg="white", anchor="nw", justify="left")
+        save_keys = tk.Message(page_saves, text="Name:\nTime:\nZone:\nArea:", font=("Consolas", 13, "bold"), bg="white", anchor="nw", justify="left")
         save_keys.place(x=150 + (i*x), y=170, width=90, height=230)
 
         # Data
@@ -171,36 +184,70 @@ def createSaves():
 
 # Save 1 command
 def command_loadSave1():
-    player = loadPlayer(save1Data)
+    loadPlayer(save1Data)
     print("Save 1 Loaded!")
     print(player)
     changePage(page_main)
+    background_main.itemconfig(areaImage, image=z1Backgrounds[player["currentArea"] - 1])
+    configAreaButtons()
 
 # Save 2 command
 def command_loadSave2():
-    player = loadPlayer(save2Data)
+    loadPlayer(save2Data)
     print("Save 2 Loaded!")
     print(player)
     changePage(page_main)
+    background_main.itemconfig(areaImage, image=z1Backgrounds[player["currentArea"] - 1])
+    configAreaButtons()
 
 
 # Save 3 command
 def command_loadSave3():
-    player = loadPlayer(save3Data)
+    loadPlayer(save3Data)
     print("Save 3 Loaded!")
     print(player)
     changePage(page_main)
+    background_main.itemconfig(areaImage, image=z1Backgrounds[player["currentArea"] - 1])
+    configAreaButtons()
 
 # ---------- Main Page ----------
 background_main = tk.Canvas(page_main, highlightthickness=0)
 background_main.pack(fill="both", expand=True)
-background_main.create_image(0, 0, image=bg_z1a1, anchor="nw")
+areaImage = background_main.create_image(0, 0, image=bg_z1a1, anchor="nw")
 
 # ----- Variables -----
 
 # ----- Functions -----
 
+# A function that goes to the next area if possible
+def command_nextArea():
+    global player
+    player["currentArea"] = player["currentArea"] + 1
+    background_main.itemconfig(areaImage, image=z1Backgrounds[player["currentArea"] - 1])
+    btn_nextArea.place_forget()
+    configAreaButtons()
+
+# A function that goes to the previous area if possible
+def command_prevArea():
+    global player
+    player["currentArea"] = player["currentArea"] - 1
+    background_main.itemconfig(areaImage, image=z1Backgrounds[player["currentArea"] - 1])
+    btn_prevArea.place_forget()
+    configAreaButtons()
+
+# A function that finds out if the area button should be placed or not based on the current area and max area the player can go
+def configAreaButtons():
+    btn_nextArea.place(x=960, y=540, width=180, height=50, anchor="se")
+    btn_prevArea.place(x=0, y=540, width=180, height=50, anchor="sw")
+    if player["currentArea"] == 1:
+        btn_prevArea.place_forget()
+    if (player["currentArea"] == player["area"]) or (player["currentArea"] == 10):
+        btn_nextArea.place_forget()
+
 # ----- buttons -----
+
+btn_nextArea = tk.Button(page_main, text="Next Area", font=("Consolas", 10, "bold"), bg="white", anchor="center", command=command_nextArea)
+btn_prevArea = tk.Button(page_main, text="Prev Area", font=("Consolas", 10, "bold"), bg="white", anchor="center", command=command_prevArea)
 
 
 # ----- Main Loop -----
