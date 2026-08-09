@@ -5,7 +5,10 @@ from game.player import Player
 class SaveManger:
 
     # Constructor
-    def __init__(self):
+    def __init__(self, game):
+
+        self.game = game
+
         SAVES_FOLDER = Path("data/saves")
         self.savePaths = [
             SAVES_FOLDER / "save1", 
@@ -17,6 +20,9 @@ class SaveManger:
         self.save2Data = [] # List to store the data from file 2
         self.save3Data = [] # List to store the data from file 3
         self.savesData = [self.save1Data, self.save2Data, self.save3Data]
+
+        # Function that grabs that sets the data lists
+        self.loadSaves()
         
     # Function that loads all of the save data into the save data lists
     def loadSaves(self):
@@ -34,4 +40,6 @@ class SaveManger:
 
     # Function that given a save number returns the player object
     def loadPlayer(self, saveNumber) -> Player:
-        return Player(self.configData(self.savesData[saveNumber-1]))
+        self.game.player.setStats(self.configData(self.savesData[saveNumber-1]))
+        self.game.page_main.update()
+        print(self.game.player)
