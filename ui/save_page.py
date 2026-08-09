@@ -1,7 +1,7 @@
 import tkinter as tk
-from ui.page import Page
+from resources.page import Page
 
-# Class that defines the start menu in its entirety
+# Class that defines the save page in its entirety
 class SavePage(Page):
 
     def __init__(self, game):
@@ -24,19 +24,19 @@ class SavePage(Page):
             self.background.create_rectangle(150 + (i*x), 90, 330 + (i*x), 450, fill="white", outline="black", width=2)
     
             # Title
-            save_lbl = tk.Label(self.frame, text="SAVE " + str(i+1), font=("Consolas", 15, "bold"), bg="grey")
+            save_lbl = tk.Label(self.frame, text="SAVE " + str(i+1), font=self.game.subtitle15, bg="grey")
             save_lbl.place(x=240 + (i*x), y=120, width=180, height=50, anchor="n")
     
             # Keys
-            save_keys = tk.Message(self.frame, text=self.game.getListStr(self.game.player.keys, 1), font=("Consolas", 13, "bold"), bg="white", anchor="nw", justify="left")
+            save_keys = tk.Message(self.frame, text=self.game.getListStr(self.game.player.keys, 1), font=self.game.body13, bg="white", anchor="nw", justify="left")
             save_keys.place(x=150 + (i*x), y=170, width=90, height=230)
     
             # Data
-            save_data = tk.Message(self.frame, text=self.game.getListStr(self.game.save_manager.savesData[i], 0), font=("Consolas", 13, "bold"), bg="white", anchor="ne", justify="right")
+            save_data = tk.Message(self.frame, text=self.game.getListStr(self.game.save_manager.savesData[i], 0), font=self.game.body13, bg="white", anchor="ne", justify="right")
             save_data.place(x=240 + (i*x), y=170, width=90, height=230)
     
             # Button
-            save_button = tk.Button(self.frame, text="LOAD", font=("Consolas", 10, "bold"), bg="white", command=lambda save=i + 1: self.loadGame(save))
+            save_button = tk.Button(self.frame, text="LOAD", font=self.game.body13, bg="white", command=lambda save=i + 1: self.loadGame(save))
             save_button.place(x=240 + (i*x), y=400, width=180, height=50, anchor="n")
     
             # transfer the dynamically created componients back into their repective save file names
@@ -49,3 +49,7 @@ class SavePage(Page):
         print("Save" + str(saveNumber) + " Loaded!")
         self.game.save_manager.loadPlayer(saveNumber)
         self.game.changePage(self.game.page_main)
+
+    # No update needed
+    def update(self):
+        pass

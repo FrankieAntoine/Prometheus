@@ -1,7 +1,8 @@
 import tkinter as tk
+from abc import ABC, abstractmethod
 
 # Basic page class that defines each page in the game
-class Page:
+class Page(ABC):
 
     # contructor
     def __init__(self, game, frame, backgroundImage):
@@ -20,3 +21,8 @@ class Page:
     # Making it so the page object can lift instead of calling the frame to lift
     def lift(self):
         self.frame.lift()
+
+    # abstract update function to provide every child with update functionality
+    @abstractmethod
+    def update(self):
+        pass

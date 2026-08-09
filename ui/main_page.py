@@ -1,35 +1,58 @@
 import tkinter as tk
-from ui.page import Page
+from resources.page import Page
 
-# Class that defines the start menu in its entirety
+# Class that defines the main page in its entirety
 class MainPage(Page):
 
     def __init__(self, game):
         super().__init__(game, game.frame_main, game.images.z1Backgrounds[0])
 
-        # Button Creation
-        self.btn_nextArea = tk.Button(self.frame, text="Next Area", font=("Consolas", 10, "bold"), bg="white", anchor="center", command=self.command_nextArea)
-        self.btn_prevArea = tk.Button(self.frame, text="Prev Area", font=("Consolas", 10, "bold"), bg="white", anchor="center", command=self.command_prevArea) 
+        # List of all of the area names
+        self.areaNames = [
+            "Tutario", "The Forest", "The Dark Oak", 
+            "The Cavern Enterance", "The Deep Dark",
+            "The Volcanic Core", "The Cavern Exit", 
+            "The Great Bridge", "The Peak of The Mountain", 
+            "Final Destination"
+        ]
 
+        # Start menu title
+        self.lbl_area = tk.Label(self.frame, anchor="center", font=self.game.title25, bg="white", fg="green", highlightbackground="grey", highlightthickness=7)
+        self.lbl_area.place(x=480, y=25, width=960, height=70, anchor="n")
+
+        # Button Creation
+        self.btn_nextArea = tk.Button(self.frame, text="Next Area    --->", anchor="e", font=("Consolas", 10, "bold"), bg="white", command=self.nextArea)
+        self.btn_prevArea = tk.Button(self.frame, text="<---    Prev Area", anchor="w",font=("Consolas", 10, "bold"), bg="white", command=self.prevArea) 
+
+        # Battle Button
+        self.btn_battle = tk.Button(self.frame, text="Battle", anchor="center",font=self.game.title25, bg="white", fg="black", command=self.battle, activebackground="red") 
+        self.btn_battle.place(x=480, y=500, width=180, height=65, anchor="s")
+
+    # Function that completely updates all objects within page main. This incudes next and prev area buttons amd the title of area
     def update(self):
         self.changeBackgroundImage(self.game.images.z1Backgrounds[self.game.player.currentArea-1])
+        self.lbl_area.config(text=self.areaNames[self.game.player.currentArea-1])
         self.btn_prevArea.place_forget()
         self.btn_nextArea.place_forget()
-        self.btn_nextArea.place(x=960, y=540, width=180, height=50, anchor="se")
-        self.btn_prevArea.place(x=0, y=540, width=180, height=50, anchor="sw")
+        self.btn_nextArea.place(x=960, y=32, width=180, height=56, anchor="ne")
+        self.btn_prevArea.place(x=0, y=32, width=180, height=56, anchor="nw")
         if self.game.player.currentArea == 1:
             self.btn_prevArea.place_forget()
         if (self.game.player.currentArea == self.game.player.area) or (self.game.player.currentArea == 10):
             self.btn_nextArea.place_forget()
 
     # A function that goes to the next area if possible
-    def command_nextArea(self):
+    def nextArea(self):
         global player
         self.game.player.currentArea = self.game.player.currentArea + 1
         self.update()
 
     # A function that goes to the previous area if possible
-    def command_prevArea(self):
+    def prevArea(self):
         global player
         self.game.player.currentArea = self.game.player.currentArea - 1
         self.update()
+
+    # A function that goes to the battle sequence for the current area
+    def battle(self):
+        self.game.changePage(self.game.page_battle)

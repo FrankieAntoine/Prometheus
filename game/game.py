@@ -7,6 +7,7 @@ from game.save_manager import SaveManger
 from ui.start_page import StartPage
 from ui.save_page import SavePage
 from ui.main_page import MainPage
+from ui.battle_page import BattlePage
 
 # Class that runs the main operations and variables of the game
 class Game(tk.Tk):
@@ -20,6 +21,11 @@ class Game(tk.Tk):
         self.resizable(False, False)
         self.title("Prometheus")
 
+        # Fonts
+        self.body13 = ("Consolas", 13, "bold")
+        self.subtitle15 = ("Consolas", 15, "bold")
+        self.title25 = ("Lucida Calligraphy", 25, "bold")
+
         # Game Data
         self.player = Player()
         self.images = Images()
@@ -31,8 +37,9 @@ class Game(tk.Tk):
         self.frame_start = tk.Frame(self)
         self.frame_saves = tk.Frame(self)
         self.frame_main = tk.Frame(self)
+        self.frame_battle = tk.Frame(self)
 
-        self.frames = [self.frame_start, self.frame_saves, self.frame_main]
+        self.frames = [self.frame_start, self.frame_saves, self.frame_main, self.frame_battle]
         for frame in self.frames:
             frame.grid(row=0, column=0, sticky="nsew")
 
@@ -43,12 +50,14 @@ class Game(tk.Tk):
         self.page_start = StartPage(self)
         self.page_saves = SavePage(self)
         self.page_main = MainPage(self)
+        self.page_battle = BattlePage(self)
 
         # Start on start page
         self.changePage(self.page_start)
 
     # Change page funtion
     def changePage(self, page):
+        page.update()
         page.lift()
 
     # A function to turn the save data lists into a string for the save files to show
