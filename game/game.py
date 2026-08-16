@@ -1,6 +1,7 @@
 import tkinter as tk
 
 from game.player import Player
+from resources.fonts import load_fonts
 from resources.images import Images
 from game.save_manager import SaveManger
 
@@ -16,15 +17,16 @@ class Game(tk.Tk):
     def __init__(self):
         super().__init__()
 
+        # Fonts
+        load_fonts()
+        self.body13 = ("Consolas", 13, "bold")
+        self.subtitle15 = ("Consolas", 15, "bold")
+        self.title25 = ("Lucida Unicode Calligraphy", 25, "bold")
+
         # Window Configuration
         self.geometry("960x540")
         self.resizable(False, False)
         self.title("Prometheus")
-
-        # Fonts
-        self.body13 = ("Consolas", 13, "bold")
-        self.subtitle15 = ("Consolas", 15, "bold")
-        self.title25 = ("Lucida Calligraphy", 25, "bold")
 
         # Game Data
         self.player = Player()
