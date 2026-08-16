@@ -19,5 +19,4 @@ class Player:
         self.currentArea = self.area
 
     def __str__(self):
-        data = dict(zip(self.keys, self.data))
-        return str(data)
+        return str(dict(zip(self.keys, self.data)))

@@ -8,4 +8,7 @@ class BattlePage(Page):
         super().__init__(game, game.frame_battle, game.images.z1Backgrounds[0])
 
     def update(self):
-        self.changeBackgroundImage(self.game.images.z1Backgrounds[self.game.player.currentArea-1])
+        if self.game.player.currentArea == 10:
+            self.changeBackgroundImage(self.game.images.bg_z1b1)
+        else:
+            self.changeBackgroundImage(self.game.images.z1Backgrounds[self.game.player.currentArea-1])
