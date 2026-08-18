@@ -5,7 +5,9 @@ from game.player import Player
 from game.item import Items
 from resources.fonts import load_fonts
 from resources.images import Images
+from game.enemy import Enemies
 from game.save_manager import SaveManger
+from game.battle_manager import BattleManager
 
 # Pages
 from ui.start_page import StartPage
@@ -35,7 +37,9 @@ class Game(tk.Tk):
         self.player = Player()
         self.itemModule = Items(self)
         self.imageModule = Images()
+        self.enemyModule = Enemies(self)
         self.saveModule = SaveManger(self)
+        self.battleModule = BattleManager(self)
 
         # Page Setup
         self.frame_start = tk.Frame(self)

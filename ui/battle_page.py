@@ -88,8 +88,5 @@ class BattlePage(Page):
         else:
             self.changeBackgroundImage(self.game.imageModule.z1Backgrounds[self.game.player.currentArea-1])
 
-        self.drawClicked = False
-        self.inspectClicked = False
-
         # Button placement
         self.show_buttons()

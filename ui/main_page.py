@@ -55,4 +55,9 @@ class MainPage(Page):
 
     # A function that goes to the battle sequence for the current area
     def battle(self):
+        
+        # Initialize battle
+        self.game.battleModule.initializeBattle()
+        
+        # Change page
         self.game.changePage(self.game.page_battle)

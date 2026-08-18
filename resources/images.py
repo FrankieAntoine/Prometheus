@@ -12,6 +12,14 @@ class Images:
         BG_ZONE2_FOLDER = BACKGROUNDS_FOLDER / "zone2"
         SPRITES_FOLDER = DATA_FOLDER / "resources" / "sprites"
 
+        # Zone 1 spirites
+
+        self.z1Sprites = []
+
+        for i in range(1, 4):
+            sprite = tk.PhotoImage(file=SPRITES_FOLDER / f"enemySprite{i}.jpg")
+            self.z1Sprites.append(sprite)
+
         # Zone 1 backgrounds
 
         self.bg_z1a0 = tk.PhotoImage(file=BG_ZONE1_FOLDER / "image0.png")
