@@ -5,7 +5,7 @@ from resources.page import Page
 class BattlePage(Page):
 
     def __init__(self, game):
-        super().__init__(game, game.frame_battle, game.images.z1Backgrounds[0])
+        super().__init__(game, game.frame_battle, game.imageModule.z1Backgrounds[0])
 
         self.drawClicked = False
         self.inspectClicked = False
@@ -84,9 +84,9 @@ class BattlePage(Page):
 
         # Background change
         if self.game.player.currentArea == 10:
-            self.changeBackgroundImage(self.game.images.bg_z1b1)
+            self.changeBackgroundImage(self.game.imageModule.bg_z1b1)
         else:
-            self.changeBackgroundImage(self.game.images.z1Backgrounds[self.game.player.currentArea-1])
+            self.changeBackgroundImage(self.game.imageModule.z1Backgrounds[self.game.player.currentArea-1])
 
         self.drawClicked = False
         self.inspectClicked = False

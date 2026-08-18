@@ -1,19 +1,24 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from game.game import Game
+
 from pathlib import Path
-from game.player import Player
 
 # Class that manages all of the saving in the game
 class SaveManger:
 
     # Constructor
-    def __init__(self, game):
+    def __init__(self, game: Game):
 
         self.game = game
 
         SAVES_FOLDER = Path("data/saves")
         self.savePaths = [
-            SAVES_FOLDER / "save1", 
-            SAVES_FOLDER / "save2", 
-            SAVES_FOLDER / "save3"
+            SAVES_FOLDER / "save1.txt", 
+            SAVES_FOLDER / "save2.txt", 
+            SAVES_FOLDER / "save3.txt"
         ]
 
         self.save1Data = [] # List to store the data from file 1
@@ -34,12 +39,23 @@ class SaveManger:
     # Function that takes the raw data from a specific save file and returns the configured data list
     def configData(self, dataList) -> list:
         dataList[0] = str(dataList[0])
-        for i in range(1, len(dataList)):
+        for i in range(1, 6):
             dataList[i] = int(dataList[i])
+        dataList[len(dataList) - 2] = eval(dataList[len(dataList) - 2])
+        dataList[len(dataList) - 1] = eval(dataList[len(dataList) - 1])
         return dataList
 
     # Function that given a save number returns the player object
-    def loadPlayer(self, saveNumber) -> Player:
+    def loadPlayer(self, saveNumber):
         self.game.player.setStats(self.configData(self.savesData[saveNumber-1]))
+        self.loadFromID(self.game.player.inventory)
+        self.loadFromID(self.game.player.equipped)
         self.game.page_main.update()
         print(self.game.player)
+
+    # Function that loads the inventory and equipped items of the player
+    def loadFromID(self, listOfIDs):
+        for i in range(len(listOfIDs)):
+            for j in range(len(self.game.itemModule.items)):
+                if listOfIDs[i] == self.game.itemModule.items[j].itemID:
+                    listOfIDs[i] = self.game.itemModule.items[j]

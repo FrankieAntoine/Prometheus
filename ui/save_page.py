@@ -5,7 +5,7 @@ from resources.page import Page
 class SavePage(Page):
 
     def __init__(self, game):
-        super().__init__(game, game.frame_saves, game.images.bg_z1a0)
+        super().__init__(game, game.frame_saves, game.imageModule.bg_z1a0)
 
         # Visual Save File representation creation
 
@@ -32,7 +32,7 @@ class SavePage(Page):
             save_keys.place(x=150 + (i*x), y=170, width=90, height=230)
     
             # Data
-            save_data = tk.Message(self.frame, text=self.game.getListStr(self.game.save_manager.savesData[i], 0), font=self.game.body13, bg="white", anchor="ne", justify="right")
+            save_data = tk.Message(self.frame, text=self.game.getListStr(self.game.saveModule.savesData[i], 0), font=self.game.body13, bg="white", anchor="ne", justify="right")
             save_data.place(x=240 + (i*x), y=170, width=90, height=230)
     
             # Button
@@ -47,7 +47,7 @@ class SavePage(Page):
     # Function that loads the player and goes to the main page
     def loadGame(self, saveNumber):
         print("Save" + str(saveNumber) + " Loaded!")
-        self.game.save_manager.loadPlayer(saveNumber)
+        self.game.saveModule.loadPlayer(saveNumber)
         self.game.changePage(self.game.page_main)
 
     # No update needed

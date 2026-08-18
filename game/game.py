@@ -1,10 +1,13 @@
 import tkinter as tk
 
+# Game Modules
 from game.player import Player
+from game.item import Items
 from resources.fonts import load_fonts
 from resources.images import Images
 from game.save_manager import SaveManger
 
+# Pages
 from ui.start_page import StartPage
 from ui.save_page import SavePage
 from ui.main_page import MainPage
@@ -30,12 +33,11 @@ class Game(tk.Tk):
 
         # Game Data
         self.player = Player()
-        self.images = Images()
-        self.save_manager = SaveManger(self)
+        self.itemModule = Items(self)
+        self.imageModule = Images()
+        self.saveModule = SaveManger(self)
 
         # Page Setup
-
-        # Frame Creation
         self.frame_start = tk.Frame(self)
         self.frame_saves = tk.Frame(self)
         self.frame_main = tk.Frame(self)
@@ -65,7 +67,7 @@ class Game(tk.Tk):
     # A function to turn the save data lists into a string for the save files to show
     def getListStr(self, data, type):
         dataStr = ""
-        for i in range(len(data)):
+        for i in range(len(data) - 2):
             if type == 0:
                 dataStr+= str(data[i]) + "\n"
             elif type == 1:

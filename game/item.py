@@ -32,6 +32,15 @@ class Item:
         Item.itemIDVariable += 1
         return string
 
+    # Printing the item gives a string that
+    def __str__(self):
+        return self.name + "; PTV: " + str(self.pointValue)
+
 # Class that defines all the items in the game
 class Items:
-    pass
+    def __init__(self, game):
+        self.game = game
+        self.items = []
+
+        self.spear = Item("Spear", 0, 25, weapon=True); self.items.append(self.spear)
+        self.bow = Item("Bow", 0, 35, weapon=True); self.items.append(self.bow)

@@ -5,7 +5,7 @@ from resources.page import Page
 class StartPage(Page):
 
     def __init__(self, game):
-        super().__init__(game, game.frame_start, game.images.bg_z1a0)
+        super().__init__(game, game.frame_start, game.imageModule.bg_z1a0)
 
         # Start menu title
         self.lbl_title = tk.Label(self.frame, anchor="center", text="PROMETHEUS", font=self.game.title25, bg="white", fg="green", highlightbackground="grey", highlightthickness=7)

@@ -5,7 +5,7 @@ from resources.page import Page
 class MainPage(Page):
 
     def __init__(self, game):
-        super().__init__(game, game.frame_main, game.images.z1Backgrounds[0])
+        super().__init__(game, game.frame_main, game.imageModule.z1Backgrounds[0])
 
         # List of all of the area names
         self.areaNames = [
@@ -30,7 +30,7 @@ class MainPage(Page):
 
     # Function that completely updates all objects within page main. This incudes next and prev area buttons amd the title of area
     def update(self):
-        self.changeBackgroundImage(self.game.images.z1Backgrounds[self.game.player.currentArea-1])
+        self.changeBackgroundImage(self.game.imageModule.z1Backgrounds[self.game.player.currentArea-1])
         self.lbl_area.config(text=self.areaNames[self.game.player.currentArea-1])
         self.btn_prevArea.place_forget()
         self.btn_nextArea.place_forget()
