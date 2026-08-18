@@ -32,9 +32,15 @@ class Item:
         Item.itemIDVariable += 1
         return string
 
-    # Printing the item gives a string that
-    def __str__(self):
-        return self.name + "; PTV: " + str(self.pointValue)
+    # A string representation that does a more detailed repr
+    def details(self, type):
+        if type == 1:
+            return self.name + "; PTV: " + str(self.pointValue)
+
+    # A string representation that gives just the name of the item
+    def __repr__(self):
+        return self.name
+    
 
 # Class that defines all the items in the game
 class Items:

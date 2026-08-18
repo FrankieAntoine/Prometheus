@@ -20,26 +20,14 @@ class Player:
 
     # String that is returned when str(Player) is called
     def __str__(self):
-        string = ""
+        string = "\n"
         for key, value in zip(self.keys, self.data):
             length = len(key) + 1
             string += key.capitalize() + ":"
             for i in range(12 - length):
                 string += " "
-
-            # Equipped data
-            if key == self.keys[len(self.keys)-2]:
-                string += str(value[0]) + ", " + str(value[1]) + "\n"
-
-            # Inventory data
-            elif key == self.keys[len(self.keys)-1]:
-                for i in range(len(value)):
-                    if i == len(value) - 1:
-                        string += str(value[i]) + "\n"
-                    else:
-                        string += str(value[i]) + ", "
-
-            # Normal data
+            if key == "equipped":
+                string += "[" + value[0].details(1) + ", " + value[1].details(1) + "]" + "\n"
             else:
                 string += str(value) + "\n"
         
