@@ -1,5 +1,4 @@
 import tkinter as tk
-import time
 from resources.page import Page
 
 # Class that defines the battle page in its entirety

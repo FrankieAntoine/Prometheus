@@ -25,23 +25,45 @@
 
 # # use zip to make the dict
 
-save3File = "data\\saves\\save1"
+# save3File = "data\\saves\\save1"
 
-playerKeys = ["name", "time"]
-save1Data = []
-save2Data = []
-save3Data = []
-player = {}
+# playerKeys = ["name", "time"]
+# save1Data = []
+# save2Data = []
+# save3Data = []
+# player = {}
 
-# Function to open a file and load the data given into a list
-def readFile(fileName, list):
-    file = open(fileName)
-    while True:
-        data = file.readline().rstrip("\n")
-        if data == "":
-            break
-        list.append(data)
-    file.close()
+# # Function to open a file and load the data given into a list
+# def readFile(fileName, list):
+#     file = open(fileName)
+#     while True:
+#         data = file.readline().rstrip("\n")
+#         if data == "":
+#             break
+#         list.append(data)
+#     file.close()
 
-readFile(save3File, save3Data)
-print(save3Data)
+# readFile(save3File, save3Data)
+# print(save3Data)
+
+
+# Testing Item Id so that is 3 long number at all times
+
+x = 2323323
+
+def setItemID():
+    if x // 10 == 0:
+        string = "00" + str(x)
+        print(string)
+    elif x // 100 == 0:
+        string = "0" + str(x)
+        print(string)
+    else:
+        if x // 1000 > 0:
+            string = "ERR"
+            print(string)
+        else:
+            string = str(x)
+            print(string)
+
+setItemID()
