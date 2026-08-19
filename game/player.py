@@ -5,7 +5,7 @@ class Player:
     def __init__(self):
 
         # Set as variables to access in the future
-        self.keys = ["name", "time", "zone", "area", "level", "exp", "equipped", "inventory"]
+        self.keys = ["name", "time", "hp", "zone", "area", "level", "exp", "equipped", "inventory"]
 
     # Function that actually sets all of the player variables
     def setStats(self, data):

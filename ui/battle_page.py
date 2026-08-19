@@ -57,6 +57,7 @@ class BattlePage(Page):
 
     def command_run(self):
         self.hide_buttons()
+        self.game.battleModule.endBattle(3)
         self.game.changePage(self.game.page_main)
 
     def show_buttons(self):
@@ -87,6 +88,9 @@ class BattlePage(Page):
             self.changeBackgroundImage(self.game.imageModule.bg_z1b1)
         else:
             self.changeBackgroundImage(self.game.imageModule.z1Backgrounds[self.game.player.currentArea-1])
+
+        # Update enemy title
+        self.lbl_enemyTitle.config(text=self.game.battleModule.enemy.name + "  " + str(self.game.battleModule.enemyHP) + "/" + str(self.game.battleModule.enemy.hp) + " HP")
 
         # Button placement
         self.show_buttons()
