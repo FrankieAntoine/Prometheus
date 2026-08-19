@@ -32,8 +32,8 @@ class BattleManager:
         self.enemy = self.getEnemy()
 
         # variable defaults
-        self.drawClicked = False
-        self.inspectClicked = False
+        # self.drawClicked = False
+        # self.inspectClicked = False
 
         # Place enemy sprite and background
         if self.enemy.sprite != None:

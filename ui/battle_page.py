@@ -7,8 +7,10 @@ class BattlePage(Page):
     def __init__(self, game):
         super().__init__(game, game.frame_battle, game.imageModule.z1Backgrounds[0])
 
-        self.drawClicked = False
-        self.inspectClicked = False
+        self.drawClicked = 1 # Temp
+        self.inspectClicked = 1
+
+        self.spacebarPressed = False
 
         # Enemy title
         self.lbl_enemyTitle = tk.Label(self.frame, text="Enemy Title", anchor="center", font=self.game.title25, bg="white", fg="green", highlightbackground="grey", highlightthickness=7)
@@ -44,7 +46,7 @@ class BattlePage(Page):
 
     def command_attack(self):
         self.hide_buttons()
-        self.game.after(2000, self.show_buttons)
+        self.attackSequence()
 
     def command_inspect(self):
         self.inspectClicked = True
@@ -80,6 +82,25 @@ class BattlePage(Page):
         self.btn_inspect.place_forget()
         self.btn_talk.place_forget()
         self.btn_run.place_forget()
+
+    def attackSequence(self):
+        self.damageModifierRect = self.background.create_rectangle(150, 410, 810, 530, fill="red")
+        self.playerRect = self.background.create_rectangle(100, 420, 125, 520, fill="grey", outline="black", width=7)
+        self.game.after(500, lambda: self.attackAnimation())
+        self.game.bind("<space>", self.stopPlayerRect)
+
+    def attackAnimation(self, xOffset=0):
+        if xOffset >= 735:
+            pass
+        else:
+            xOffset += 5
+            self.background.move(self.playerRect, 5, 0)
+            if not self.spacebarPressed:
+                self.game.after(10, lambda: self.attackAnimation(xOffset))
+
+    def stopPlayerRect(self, event):
+        if event.keysym == "space":
+            self.spacebarPressed = True
 
     def update(self):
 
