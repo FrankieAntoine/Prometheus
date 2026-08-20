@@ -28,7 +28,17 @@ class Page(ABC):
     def lift(self):
         self.frame.lift()
 
-    # abstract update function to provide every child with update functionality
+    # Abstract update function to provide every child with update functionality
     @abstractmethod
     def update(self):
+        pass
+
+    # Abstract function that deals with the users keyboard presses depending on each page
+    @abstractmethod
+    def on_key_press(self, event):
+        pass
+
+    # Abstract function that deals with the users keyboard releases depending on each page
+    @abstractmethod
+    def on_key_release(self, event):
         pass

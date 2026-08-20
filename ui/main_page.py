@@ -28,19 +28,6 @@ class MainPage(Page):
         self.btn_battle = tk.Button(self.frame, text="Battle", anchor="center",font=self.game.title25, bg="white", fg="black", command=self.battle, activebackground="red") 
         self.btn_battle.place(x=480, y=500, width=180, height=65, anchor="s")
 
-    # Function that completely updates all objects within page main. This incudes next and prev area buttons amd the title of area
-    def update(self):
-        self.changeBackgroundImage(self.game.imageModule.z1Backgrounds[self.game.player.currentArea-1])
-        self.lbl_area.config(text=self.areaNames[self.game.player.currentArea-1])
-        self.btn_prevArea.place_forget()
-        self.btn_nextArea.place_forget()
-        self.btn_nextArea.place(x=960, y=32, width=180, height=56, anchor="ne")
-        self.btn_prevArea.place(x=0, y=32, width=180, height=56, anchor="nw")
-        if self.game.player.currentArea == 1:
-            self.btn_prevArea.place_forget()
-        if (self.game.player.currentArea == self.game.player.area) or (self.game.player.currentArea == 10):
-            self.btn_nextArea.place_forget()
-
     # A function that goes to the next area if possible
     def nextArea(self):
         global player
@@ -61,3 +48,24 @@ class MainPage(Page):
         
         # Change page
         self.game.changePage(self.game.page_battle)
+
+    # Function that completely updates all objects within page main. This incudes next and prev area buttons amd the title of area
+    def update(self):
+        self.changeBackgroundImage(self.game.imageModule.z1Backgrounds[self.game.player.currentArea-1])
+        self.lbl_area.config(text=self.areaNames[self.game.player.currentArea-1])
+        self.btn_prevArea.place_forget()
+        self.btn_nextArea.place_forget()
+        self.btn_nextArea.place(x=960, y=32, width=180, height=56, anchor="ne")
+        self.btn_prevArea.place(x=0, y=32, width=180, height=56, anchor="nw")
+        if self.game.player.currentArea == 1:
+            self.btn_prevArea.place_forget()
+        if (self.game.player.currentArea == self.game.player.area) or (self.game.player.currentArea == 10):
+            self.btn_nextArea.place_forget()
+
+    # Function that deals with keyboard presses
+    def on_key_press(self, event):
+        pass
+
+    # Function that deals with keyboard releases
+    def on_key_release(self, event):
+        pass

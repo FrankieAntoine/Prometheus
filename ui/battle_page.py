@@ -7,8 +7,8 @@ class BattlePage(Page):
     def __init__(self, game):
         super().__init__(game, game.frame_battle, game.imageModule.z1Backgrounds[0])
 
-        self.drawClicked = 1 # Temp
-        self.inspectClicked = 1
+        self.drawClicked = False
+        self.inspectClicked = False
 
         self.spacebarPressed = False
 
@@ -37,12 +37,12 @@ class BattlePage(Page):
     
     def command_items(self):
         self.hide_buttons()
-        self.game.after(2000, self.show_buttons)
+        self.game.after(500, self.show_buttons)
 
     def command_draw(self):
         self.drawClicked = True
         self.hide_buttons()
-        self.game.after(2000, self.show_buttons)
+        self.game.after(500, self.show_buttons)
 
     def command_attack(self):
         self.hide_buttons()
@@ -51,17 +51,18 @@ class BattlePage(Page):
     def command_inspect(self):
         self.inspectClicked = True
         self.hide_buttons()
-        self.game.after(2000, self.show_buttons)
+        self.game.after(500, self.show_buttons)
 
     def command_talk(self):
         self.hide_buttons()
-        self.game.after(2000, self.show_buttons)
+        self.game.after(500, self.show_buttons)
 
     def command_run(self):
         self.hide_buttons()
         self.game.battleModule.endBattle(3)
         self.game.changePage(self.game.page_main)
 
+    # Function that dhoes the battle buttons based on if the draw or inspect buttons have already been pressed
     def show_buttons(self):
         self.btn_items.place(x=240, y=470, width=100, height=80, anchor="center")
 
@@ -75,6 +76,7 @@ class BattlePage(Page):
             self.btn_inspect.place(x=560, y=470, width=100, height=80, anchor="center")
         self.btn_run.place(x=720, y=470, width=100, height=80, anchor="center")
 
+    # Function that removes all of the battle buttons
     def hide_buttons(self):
         self.btn_items.place_forget()
         self.btn_draw.place_forget()
@@ -83,25 +85,39 @@ class BattlePage(Page):
         self.btn_talk.place_forget()
         self.btn_run.place_forget()
 
+    # Function that creates the attack UI and starts the attack animation
     def attackSequence(self):
-        self.damageModifierRect = self.background.create_rectangle(150, 410, 810, 530, fill="red")
-        self.playerRect = self.background.create_rectangle(100, 420, 125, 520, fill="grey", outline="black", width=7)
+
+        # Create battle UI
+        self.damageModifier = self.background.create_image(480, 470, image=self.game.imageModule.damageModifier, anchor="center")
+        self.playerRect = self.background.create_rectangle(100, 420, 118, 520, fill="grey", outline="black", width=7)
+
+        # Start animation
         self.game.after(500, lambda: self.attackAnimation())
-        self.game.bind("<space>", self.stopPlayerRect)
 
+    # Recursive function that moves the player rect until a spacebar input stops it
     def attackAnimation(self, xOffset=0):
-        if xOffset >= 735:
-            pass
-        else:
-            xOffset += 5
-            self.background.move(self.playerRect, 5, 0)
-            if not self.spacebarPressed:
-                self.game.after(10, lambda: self.attackAnimation(xOffset))
 
-    def stopPlayerRect(self, event):
-        if event.keysym == "space":
+        # Stop at 735 pixels from starting position
+        if xOffset >= 735:
             self.spacebarPressed = True
 
+        # Offset the player rect by 10 pixels
+        xOffset += 10
+        self.background.move(self.playerRect, 10, 0)
+
+        # If spacebar not clicked, recall function every 15ms
+        if not self.spacebarPressed:
+            self.game.after(15, lambda: self.attackAnimation(xOffset))
+
+        # If spacebar clicked, set it back to false and detete the battle UI
+        else:
+            self.spacebarPressed = False
+            self.game.after(500, lambda: self.background.delete(self.damageModifier))
+            self.game.after(500, lambda: self.background.delete(self.playerRect))
+            self.game.after(500, self.show_buttons)
+
+    # Update function that is usually called once at the begining of a page switch or major page changes
     def update(self):
 
         # Background change
@@ -113,5 +129,11 @@ class BattlePage(Page):
         # Update enemy title
         self.lbl_enemyTitle.config(text=self.game.battleModule.enemy.name + "  " + str(self.game.battleModule.enemyHP) + "/" + str(self.game.battleModule.enemy.hp) + " HP")
 
-        # Button placement
-        self.show_buttons()
+    # Function that deals with keyboard presses
+    def on_key_press(self, event):
+        if event.keysym == "space":
+            self.spacebarPressed = True
+
+    # Function that deals with keyboard releases
+    def on_key_release(self, event):
+        pass

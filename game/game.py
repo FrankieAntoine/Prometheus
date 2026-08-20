@@ -10,6 +10,7 @@ from game.save_manager import SaveManger
 from game.battle_manager import BattleManager
 
 # Pages
+from resources.page import Page
 from ui.start_page import StartPage
 from ui.save_page import SavePage
 from ui.main_page import MainPage
@@ -32,6 +33,12 @@ class Game(tk.Tk):
         self.geometry("960x540")
         self.resizable(False, False)
         self.title("Prometheus")
+
+        # Keyboard input initialization
+        self.bind("<KeyPress>", self.on_key_press_main)
+        self.bind("<KeyRelease>", self.on_key_release_main)
+
+        self.bind("<Escape>", lambda: self.destroy())
 
         # Game Data
         self.player = Player()
@@ -60,11 +67,15 @@ class Game(tk.Tk):
         self.page_main = MainPage(self)
         self.page_battle = BattlePage(self)
 
+        # Current page function used mostly for key pressing and releasing handling between different pages
+        self.currentPage: Page = None
+
         # Start on start page
         self.changePage(self.page_start)
 
     # Change page funtion
     def changePage(self, page):
+        self.currentPage = page
         page.update()
         page.lift()
 
@@ -78,3 +89,10 @@ class Game(tk.Tk):
                 dataStr+= str(data[i]).capitalize() + ":" + "\n"
         return dataStr
 
+    # Function that directs the key press event to the right page depending on the current page
+    def on_key_press_main(self, event):
+        self.currentPage.on_key_press(event)
+
+    # Function that directs the key release event to the right page depending on the current page
+    def on_key_release_main(self, event):
+        self.currentPage.on_key_release(event)

@@ -11,9 +11,9 @@ class Images:
         BG_ZONE1_FOLDER = BACKGROUNDS_FOLDER / "zone1"
         BG_ZONE2_FOLDER = BACKGROUNDS_FOLDER / "zone2"
         SPRITES_FOLDER = DATA_FOLDER / "resources" / "sprites"
+        ELEMENTS_FOLDER = DATA_FOLDER / "resources" / "elements"
 
         # Zone 1 spirites
-
         self.z1Sprites = []
 
         for i in range(1, 4):
@@ -21,7 +21,6 @@ class Images:
             self.z1Sprites.append(sprite)
 
         # Zone 1 backgrounds
-
         self.bg_z1a0 = tk.PhotoImage(file=BG_ZONE1_FOLDER / "image0.png")
 
         self.z1Backgrounds = []
@@ -31,3 +30,6 @@ class Images:
             self.z1Backgrounds.append(background)
 
         self.bg_z1b1 = tk.PhotoImage(file=BG_ZONE1_FOLDER / "image11.png")
+
+        # Game elements
+        self.damageModifier = tk.PhotoImage(file=ELEMENTS_FOLDER / "damageModifier.png")

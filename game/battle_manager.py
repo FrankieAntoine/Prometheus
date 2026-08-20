@@ -32,8 +32,8 @@ class BattleManager:
         self.enemy = self.getEnemy()
 
         # variable defaults
-        # self.drawClicked = False
-        # self.inspectClicked = False
+        self.game.page_battle.drawClicked = False
+        self.game.page_battle.inspectClicked = False
 
         # Place enemy sprite and background
         if self.enemy.sprite != None:
@@ -43,6 +43,9 @@ class BattleManager:
         # Initialize battle variables
         self.playerHP = self.game.player.hp
         self.enemyHP = self.enemy.hp
+
+        # Show battle buttons
+        self.game.page_battle.show_buttons()
 
     # Function that attacks the enemy using the players chosen attack
     def playerAttack(self):
@@ -58,6 +61,8 @@ class BattleManager:
         # Delete sprite and background from battle page
         self.game.page_battle.background.delete(self.enemySprite)
         self.game.page_battle.background.delete(self.enemySpriteBackground)
+
+        self.game.page_battle.hide_buttons()
 
         # battle ended: Ran away
         if type == 3:

@@ -53,3 +53,11 @@ class SavePage(Page):
     # No update needed
     def update(self):
         pass
+    
+    # Function that deals with keyboard presses
+    def on_key_press(self, event):
+        pass
+
+    # Function that deals with keyboard releases
+    def on_key_release(self, event):
+        pass
