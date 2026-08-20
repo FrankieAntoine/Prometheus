@@ -38,7 +38,8 @@ class Game(tk.Tk):
         self.bind("<KeyPress>", self.on_key_press_main)
         self.bind("<KeyRelease>", self.on_key_release_main)
 
-        self.bind("<Escape>", lambda: self.destroy())
+        # Pressing escape closes the game
+        self.bind("<Escape>", lambda e: self.destroy())
 
         # Game Data
         self.player = Player()
