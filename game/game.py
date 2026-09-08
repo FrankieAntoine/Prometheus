@@ -15,6 +15,7 @@ from ui.start_page import StartPage
 from ui.save_page import SavePage
 from ui.main_page import MainPage
 from ui.battle_page import BattlePage
+from ui.inventory_page import InventoryPage
 
 # Class that runs the main operations and variables of the game
 class Game(tk.Tk):
@@ -54,8 +55,9 @@ class Game(tk.Tk):
         self.frame_saves = tk.Frame(self)
         self.frame_main = tk.Frame(self)
         self.frame_battle = tk.Frame(self)
+        self.frame_inventory = tk.Frame(self)
 
-        self.frames = [self.frame_start, self.frame_saves, self.frame_main, self.frame_battle]
+        self.frames = [self.frame_start, self.frame_saves, self.frame_main, self.frame_battle, self.frame_inventory]
         for frame in self.frames:
             frame.grid(row=0, column=0, sticky="nsew")
 
@@ -67,6 +69,7 @@ class Game(tk.Tk):
         self.page_saves = SavePage(self)
         self.page_main = MainPage(self)
         self.page_battle = BattlePage(self)
+        self.page_inventory = InventoryPage(self)
 
         # Current page function used mostly for key pressing and releasing handling between different pages
         self.currentPage: Page = None
